@@ -1,0 +1,22 @@
+.detail {
+   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+   width: 350px;
+   text-align: center;
+   p {
+      text-align: center;
+      text-transform: capitalize;
+      font-weight: 700;
+      font-size: 22px;
+   }
+   img {
+      max-width: 250px;
+   }
+   &__close {
+      font-size: 40px;
+      font-weight: 600;
+   }
+   &__exit {
+      text-decoration: none;
+      color: #000;
+   }
+}
