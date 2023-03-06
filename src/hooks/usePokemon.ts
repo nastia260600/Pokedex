@@ -9,20 +9,20 @@ interface usePokemonProps {
 
 const usePokemon = ({ pokemonName }: usePokemonProps) => {
    const [pokemon, setPokemon] = useState<DetailPokemon | null>(null);
-   const [isLoading, setIsLoading] = useState(false); //чтобы знать, когда закончим извлекать данные из Pokemon API
+   const [isLoading, setIsLoading] = useState(false);
 
-   useEffect(() => {  //добавляем эффект-хук, чтобы мы вызывали ф-ю извлечения покемонов каждый раз, когда pokemonName props изменяется 
-      if (pokemonName) {   //вызываем ф-ю, если pokemonName props содержит значение
+   useEffect(() => {
+      if (pokemonName) {
          fetchPokemon();
       }
    }, [pokemonName])
 
-   const fetchPokemon = async () => {   //для вызова подробной информации
-      if (pokemonName) {  //проверяем не является ли имя покемона null
+   const fetchPokemon = async () => {
+      if (pokemonName) {
          setIsLoading(true);
          const url = `${POKEMON_API_POKEMON_URL}/${pokemonName}`;
-         const result = await httpClient.get<DetailPokemon>(url);  //сообщаем axios, что мы получаем DetailPokemon как ответ(response)
-         if (result?.data) {    //собираемся установить состояние покемонов( setPokemon state)
+         const result = await httpClient.get<DetailPokemon>(url);
+         if (result?.data) {
             setPokemon(result.data);
          }
          setIsLoading(false);

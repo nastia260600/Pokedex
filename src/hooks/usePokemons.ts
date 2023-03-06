@@ -4,12 +4,12 @@ import { httpClient } from './../api/httpClient';
 import { useEffect, useState } from 'react'
 import { POKEMON_API_POKEMON_URL } from '../constants'
 
-const usePokemons = () => {   //будем отслеживать покемонов с помощью массива
-   const [pokemons, setPokemons] = useState<ListPokemon[]>([]) //это будет массив индексированных покемонов и мы инициализируем его как пустой массив
-   const [nextUrl, setNextUrl] = useState<string | null>(POKEMON_API_POKEMON_URL)   //создаем следующее состояние url(next url state) в хуке и инициализируем его нашей POKEMON-URL константой
-   const [selectedType, setSelectedType] = useState<IndexedType | null>(null) //собираемся менять этот state, когда юзер кликает на type button
+const usePokemons = () => {
+   const [pokemons, setPokemons] = useState<ListPokemon[]>([])
+   const [nextUrl, setNextUrl] = useState<string | null>(POKEMON_API_POKEMON_URL)
+   const [selectedType, setSelectedType] = useState<IndexedType | null>(null)
 
-   useEffect(() => { //устанавливаем useEffect, чтобы вызывать эту ф-ю в начале пользовательского хука
+   useEffect(() => {
       if (selectedType) {
          fetchPokemonsByType()
       } else {
@@ -18,9 +18,9 @@ const usePokemons = () => {   //будем отслеживать покемон
       }
    }, [selectedType])
 
-   const fetchPokemonsByType = async () => {  //ф-я извлечения покемонов
-      if (selectedType) {   //если nextUrl имеет значение
-         const result = await httpClient.get<PokemonByTypeListResponse>(selectedType.url) //то вызываем этот url с помощью нашего axios-экземпляра и сохраняем данные как ответ списка покемонов
+   const fetchPokemonsByType = async () => {
+      if (selectedType) {
+         const result = await httpClient.get<PokemonByTypeListResponse>(selectedType.url)
          if (result?.data?.pokemon) {
             const listPokemons = result.data.pokemon.map((p) => indexedPokemonToListPokemon(p.pokemon))
             setPokemons(listPokemons)
@@ -29,8 +29,7 @@ const usePokemons = () => {   //будем отслеживать покемон
       }
    }
 
-   //преобразовываем каждого проиндексированного покемона в массиве результатов в список покемонов, добавляя число покемона и url изображения
-   const indexedPokemonToListPokemon = (indexedPokemon: IndexedPokemon) => {  //ф-я получает проиндекс. покемона(входные данные) и возвращает список покемонов
+   const indexedPokemonToListPokemon = (indexedPokemon: IndexedPokemon) => {
       const pokedexNumber = parseInt(indexedPokemon.url.replace(`${POKEMON_API_POKEMON_URL}/`, "").replace("/", ""))
       //console.log(pokedexNumber)
       const listPokemon: ListPokemon = {
@@ -43,10 +42,10 @@ const usePokemons = () => {   //будем отслеживать покемон
       return listPokemon
    }
 
-   const fetchPokemon = async () => {  //ф-я извлечения покемонов
-      if (nextUrl) {   //если nextUrl имеет значение
-         const result = await httpClient.get<PokemonListResponse>(nextUrl) //то вызываем этот url с помощью нашего axios-экземпляра и сохраняем данные как ответ списка покемонов
-         if (result?.data?.results) {  //сохраним массив результатов в нашем массиве состояний покемонов(pokemon state array)
+   const fetchPokemon = async () => {
+      if (nextUrl) {
+         const result = await httpClient.get<PokemonListResponse>(nextUrl)
+         if (result?.data?.results) {
             const listPokemons = result.data.results.map(p => indexedPokemonToListPokemon(p))
             setPokemons([...pokemons, ...listPokemons])
             setNextUrl(result.data.next)
@@ -54,7 +53,7 @@ const usePokemons = () => {   //будем отслеживать покемон
       }
    }
 
-   return { //этот хук будет возвращать обьект с массивом покемонов
+   return {
       pokemons,
       fetchNextPage: fetchPokemon,
       hasMorePokemon: !!nextUrl,

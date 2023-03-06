@@ -10,7 +10,7 @@ export interface PokemonListResponse {
    results: IndexedPokemon[]
 }
 
-export interface ListPokemon {   //интерфейс, который принимает значения из index pokemon interface, который мы получили от pokemon-API + пользовательские значения
+export interface ListPokemon {
    name: string
    url: string
    image: string

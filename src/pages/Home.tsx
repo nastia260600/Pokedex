@@ -5,7 +5,7 @@ import './home.scss'
 import { IndexedType } from "../interfaces/pokemon.interface";
 
 const Home = () => {
-   const { pokemons, fetchNextPage, hasMorePokemon, pokemonTypes, setSelectedType, setPokemons } = usePokemons() //импортируем наш usePokemons-хук, чтобы начать его использовать
+   const { pokemons, fetchNextPage, hasMorePokemon, pokemonTypes, setSelectedType, setPokemons } = usePokemons()
 
    const handleSelectType = (type: IndexedType | null) => {
       if (type) {

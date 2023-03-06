@@ -2,7 +2,7 @@ import { DetailPokemon, ListPokemon } from "../../interfaces/pokemon.interface"
 import './pokemonCard.scss'
 import { NavLink } from "react-router-dom";
 
-interface PokemonCardProps {  //создаем пропс-интерфейс, чтобы заставить этот компонент получтаь один индексированный pokemon-обьект, как пропсу
+interface PokemonCardProps {
    pokemon: ListPokemon
 }
 
